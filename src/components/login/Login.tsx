@@ -96,7 +96,7 @@ export const Login = () => {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" underline="none">회원가입</Link>
+                                <Link href="/signUp" underline="none">회원가입</Link>
                             </Grid>
                             <Grid item>
                                 <Link href="/passwordFinder" underline="none">비밀번호 찾기</Link>
