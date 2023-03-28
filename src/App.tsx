@@ -4,6 +4,9 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Login } from "./components/login/Login";
 import { PasswordFinder } from "./components/login/PasswordFinder";
+import { TestProject } from "./components/project/TestProject";
+
+
 
 interface Menu {
   path: string
@@ -12,7 +15,8 @@ interface Menu {
 
 const menus: Menu[]  = [
   {path : '/', element: <Login/> },
-  {path : '/passwordFinder', element: <PasswordFinder/> }
+  {path : '/passwordFinder', element: <PasswordFinder/> },
+  {path : '/testProject', element: <TestProject/>}
 ]
 
 const App = () => (
@@ -26,7 +30,6 @@ const App = () => (
           })
         }
       </Routes>
-      <div>프로젝트 생성</div>
     </AnimatePresence>
 );
 

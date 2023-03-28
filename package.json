@@ -14,6 +14,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.9",
+    "@mui/joy": "^5.0.0-alpha.72",
     "@mui/lab": "^5.0.0-alpha.123",
     "@mui/material": "^5.11.13",
     "clean-webpack-plugin": "^4.0.0",
@@ -22,7 +23,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
-    "style-loader": "^3.3.2"
+    "style-loader": "^3.3.2",
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",

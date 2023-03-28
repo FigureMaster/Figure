@@ -1,6 +1,5 @@
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import './modal.scss';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,9 +13,6 @@ interface CustomAlertProps {
     message: string;
     title: string;
 }
-
-
-  
   
   export const Modal = (props: any) => {
     const descriptionElementRef = React.useRef<HTMLElement>(null);
@@ -37,12 +33,14 @@ interface CustomAlertProps {
             scroll='body'
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
+            maxWidth={props.maxWidth}
           >
             <DialogContent dividers={false}>
               <DialogContentText
                 id="scroll-dialog-description"
                 ref={descriptionElementRef}
                 tabIndex={-1}
+                width={props.width}
               >
               </DialogContentText>
                 <CloseIcon onClick={props.onClose} className="modal-close" />
