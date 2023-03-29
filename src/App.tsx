@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { Login } from "./components/login/Login";
 import { PasswordFinder } from "./components/login/PasswordFinder";
 import { SignUp } from "./components/login/SignUp";
+import { MyPage } from "./components/myPage/MyPage";
 
 interface Menu {
   path: string
@@ -14,7 +15,8 @@ interface Menu {
 const menus: Menu[]  = [
   {path : '/', element: <Login/> },
   {path : '/passwordFinder', element: <PasswordFinder/> },
-  {path : '/signUp', element: <SignUp/> }
+  {path : '/signUp', element: <SignUp/> },
+  {path : '/myPage', element: <MyPage/> }
 ]
 
 const App = () => (
