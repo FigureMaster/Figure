@@ -1,12 +1,10 @@
 import React from 'react';
-//import styled from "styled-components";
 import {Button} from '../common/button/Button';
-import Input from '@mui/joy/Input';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
-import { styled, css } from '@mui/material/styles';
-import { TextField } from '@mui/material';
-
+import { TextField, InputLabel } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const theme = createTheme({
     palette: {
@@ -18,75 +16,26 @@ const theme = createTheme({
 
 export const CreateProject = (props) => {
     return (
-        <StyledContent>
             <ThemeProvider theme={theme}>
-            <div  className="createProject">
-            <div className="title">
-                <h3>프로젝트 생성하기</h3>
-                <h5>프로젝트 정보를 입력하고, 프로젝트 관리자로 시작해 보세요.</h5>
-            </div>
-            <div className="info">
-                <label htmlFor="projectNm">프로젝트 이름</label>
-                <StyledInput 
-                    required
-                            id='projectNm'
-
-                />
-            </div>
-            <br/>
-            <div className="info">
-                <label htmlFor="projectDesc">프로젝트 설명</label>
-                <StyledInput 
-                            id= 'projectDesc'
-                        
-                />
-            </div>
-            <br/>
-            <Button label='프로젝트 생성' size='small'/>
-            </div>
+               <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', textAlign: 'center' }}>
+					<div>
+						<Typography variant='h4' sx={{fontWeight:'bold', color: '#333'}}>프로젝트 생성하기</Typography>
+						<Typography sx={{fontSize: '15px', fontWeight:'bold', margin:'15px 0', color: '#333'}}>프로젝트 정보를 입력하고, 프로젝트 관리자로 시작해 보세요.</Typography>
+					</div>
+					<Box sx={{marginTop: '20px', width: '70%'}}>
+						<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
+							<InputLabel htmlFor="projectNm" sx={{fontWeight:'bold', width:'30%', color: '#333'}} required>프로젝트 이름</InputLabel>
+							<TextField sx={{width:'70%', maxLength: 15}} required placeholder='프로젝트 이름을 입력해주세요.' id='projectNm' />
+						</Box>
+					
+						<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
+							<InputLabel htmlFor="projectDesc" sx={{fontWeight:'bold', width:'30%', marginBottom: '100px', color: '#333'}} required>프로젝트 설명</InputLabel>
+							<TextField sx={{width:'70%',  '& input' : {maxLength:50} }} multiline rows={5} required placeholder='프로젝트 설명을 입력해주세요.' id='projectDesc' />
+						</Box>
+					
+						<Button label='프로젝트 생성' style={{width: '70%', padding: '12px 0', margin: '15px 0', fontSize: '16px', fontWeight:'bold'}}/>
+					</Box>
+              </Box>
             </ThemeProvider>
-        </StyledContent>
-
     )
 }
-
-
-const StyledInput = styled(TextField)(({ theme }) => ({
-    display: 'inline-flex',
-  width: 500,
-
-  '& .MuiInputBase-input': {
-    color: theme.palette.primary.main,
-    '&::placeholder': {
-      color: theme.palette.text.disabled
-    }
-  },
-
-  '& .MuiOutlinedInput-root': {
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.primary.main,
-    }
-  },
-  }));
-
-const StyledContent = styled('div')(css`
-    .createProject {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .title{
-        text-align: center;
-    }
-
-    label{
-        margin: 20px;
-    }
-
-    .info {
-        text-align: center
-    }
- 
-`)

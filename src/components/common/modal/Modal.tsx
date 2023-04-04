@@ -34,6 +34,7 @@ interface CustomAlertProps {
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
             maxWidth={props.maxWidth}
+            PaperProps={{style: {backgroundColor: '#F7F6F4'}}}
           >
             <DialogContent dividers={false}>
               <DialogContentText

@@ -1,75 +1,41 @@
 import React from 'react';
-import {Modal} from '../common/modal/Modal';
 import {Button} from '../common/button/Button';
-import Input from '@mui/joy/Input';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { orange } from '@mui/material/colors';
+import { TextField, InputLabel } from '@mui/material';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
-import { styled, css } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: orange[500],
+      }
+    },
+  });
 
 export const DeleteProject = (props) => {
     return (
-        <StyledContent>
-            <div  className="createProject">
-            <div className="title">
-                <h3>프로젝트 생성하기</h3>
-                <h5>프로젝트 정보를 입력하고, 프로젝트 관리자로 시작해 보세요.</h5>
-            </div>
-            <div className="info">
-                <label htmlFor="projectNm">프로젝트 이름</label>
-                <StyledInput color='primary'
-                    slotProps={{
-                        input: {
-                            id: 'projectNm'
-                        }
-                    }}
-                />
-            </div>
-            <br/>
-            <div className="info">
-                <label htmlFor="projectDesc">프로젝트 설명</label>
-                <StyledInput color='primary'
-                    slotProps={{
-                        input: {
-                            id: 'projectDesc'
-                        }
-                    }}
-                />
-            </div>
-            <br/>
-            <Button label='프로젝트 생성'/>
-            </div>
-        </StyledContent>
+        <ThemeProvider theme={theme}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', textAlign: 'center' }}>
+             <div>
+                 <Typography variant='h5' sx={{fontWeight:'bold', color: '#333'}}>정말로 삭제하시겠습니까?</Typography>
+                 
+                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+                    <Typography sx={{fontSize: '15px', fontWeight:'bold', margin:'20px 0', color: '#AD0000'}}>삭제한 프로젝트 데이터는 되돌릴 수 없습니다.</Typography>
+                    <Typography sx={{fontSize: '15px', fontWeight:'bold', color: '#333'}}>신중한 삭제를 위해,</Typography>
+                    <Typography sx={{fontSize: '15px', fontWeight:'bold', color: '#333'}}>삭제하려는 프로젝트 이름을 입력해주세요.</Typography>
+                 </Box>
+             </div>
+             <Box sx={{marginTop: '20px', width: '100%'}}>
+                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
+                     <TextField sx={{width:'70%', maxLength: 15}} required placeholder='Figure-Master' id='projectNm' />
+                 </Box>
+                 <Button label='삭제하기' style={{width: '70%', padding: '12px 0', margin: '15px 0', fontSize: '16px', fontWeight:'bold'}}/>
+             </Box>
+       </Box>
+     </ThemeProvider>
     )
 }
 
-
-const StyledInput = styled(Input)(css`
-    display: inline-flex;
-    width: 500px;
-
-    #projectNm {
-        width: 100%;
-    }
-`)
-
-
-const StyledContent = styled('div')(css`
-    .createProject {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .title {
-        text-align: center;
-    }
-
-    label {
-        margin: 20px;
-    }
-
-    .info {
-        text-align: center;
-    }
-`)
