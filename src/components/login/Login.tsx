@@ -133,7 +133,12 @@ export const Login = () => {
                                 </Button>
                             </Grid>
                         </Grid>
-                        
+                        {/* 마이페이지 이동(임시) */}
+                        <Grid container style={{margin: '30px'}}>
+                            <Grid item xs>
+                                <Link href="/myPage" underline="none">마이페이지(임시)</Link>
+                            </Grid>
+                        </Grid>                      
                     </Box>
                 </Container>
             </ThemeProvider>
