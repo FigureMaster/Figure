@@ -12,6 +12,8 @@ import { InputLabel } from '@mui/material';
 import { motion } from "framer-motion";
 import Link from '@mui/material/Link';
 import { Alert } from '../common/modal/Modal';
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../../actions/userAction";
 
 const theme = createTheme({
     palette: {
@@ -21,7 +23,7 @@ const theme = createTheme({
     },
   });
 
-export const SignUp = () => {
+export const SignUp = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
@@ -32,6 +34,8 @@ export const SignUp = () => {
     const [openAlert, setOpenAlert] = useState(false);
     const [msg, setMsg] = useState("");
     
+    const dispatch = useDispatch();
+
     const onCloseAlertHandler = () => setOpenAlert(false);
     
     const onEmailHandler = (event) => {
@@ -87,6 +91,27 @@ export const SignUp = () => {
             setMsg(errorMsg);
             return;
         }
+
+        const data = {
+            email: email,
+            name: name,
+            desc: desc,
+            password: password
+        };
+
+        signUpUser(data);
+        // dispatch(signUpUser(data)).then((res) => {
+        //   console.log(res);
+        //   if (res.payload.success) {
+        //     props.history.push("/");
+        //   } else {
+        //     alert(res.payload.message);
+        //   }
+        // })
+        // .catch((err) => {
+        //   console.log(err);
+        // });
+
     }
 
     return (
