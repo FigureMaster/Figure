@@ -1,6 +1,6 @@
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import './modal.scss';
+import './modal.css';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -69,7 +69,9 @@ interface CustomAlertProps {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {props.message}
+                <pre className='alert-text'>
+                  {props.message}
+                </pre>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
