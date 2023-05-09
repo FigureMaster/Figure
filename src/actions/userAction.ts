@@ -1,7 +1,7 @@
 import { REGISTER_USER, LOGIN_USER } from "./types";
 import { request } from "../utils/axios";
 
-const USER_URL = "/api/user";
+const USER_URL = "/user";
 
 export function signUpUser(dataToSubmit) {
   const data = request("post", USER_URL + "/signUp", dataToSubmit);
