@@ -40,7 +40,7 @@ export const PasswordFinder = () => {
                     
                     >
                         <Typography component='h1' variant='h3' color='#fe921f'>
-                            Figure
+                            <Link href="/" underline="none">Figure</Link>
                         </Typography>
 
                         <InputLabel sx={{ mt: 3, fontWeight: 'bold'}}>

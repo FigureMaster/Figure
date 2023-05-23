@@ -10,6 +10,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
 import { InputLabel } from '@mui/material';
 import { motion } from "framer-motion";
+import Link from '@mui/material/Link';
+import { Alert } from '../common/modal/Modal';
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../../actions/userAction";
 
 const theme = createTheme({
     palette: {
@@ -19,13 +23,20 @@ const theme = createTheme({
     },
   });
 
-export const SignUp = () => {
+export const SignUp = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [desc, setDesc] = useState("")
     const [isEmailBlur, setEmailBlur] = useState(false)
+    const [isAgree, setAgree] = useState(false)
+    const [openAlert, setOpenAlert] = useState(false);
+    const [msg, setMsg] = useState("");
+    
+    const dispatch = useDispatch();
+
+    const onCloseAlertHandler = () => setOpenAlert(false);
     
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value)
@@ -46,6 +57,10 @@ export const SignUp = () => {
     const onDescHandler = (event) => {
         setDesc(event.currentTarget.value)
     }
+
+    const onAgreeHandler = () => {
+        setAgree(!isAgree);
+    }
     
     const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
     const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
@@ -62,6 +77,43 @@ export const SignUp = () => {
 
     const onEmailBlurHandler = () => setEmailBlur(true);
     const onEmailFocusHandler = () => setEmailBlur(false);
+
+    const onSubmitHandler = () => {
+        let errorMsg = '';
+        setMsg(errorMsg);
+        if(!email || hasEmailError()) errorMsg += '이메일을 확인해주세요';
+        if(!password || hasPasswordError() || !confirmPassword || hasNotSameError()) errorMsg += (!!errorMsg ? '\n' : '') + '비밀번호를 확인해주세요';
+        if(!name) errorMsg += (!!errorMsg ? '\n' : '') + '닉네임을 작성해주세요';
+        if(!isAgree) errorMsg += (!!errorMsg ? '\n' : '') + '동의 체크를 눌러주세요';
+
+        if(!!errorMsg) {
+            setOpenAlert(true);
+            setMsg(errorMsg);
+            return;
+        }
+
+        const data = {
+            email: email,
+            name: name,
+            desc: desc,
+            password: password
+        };
+
+        signUpUser(data);
+        // dispatch(signUpUser(data)).then((res) => {
+        //   console.log(res);
+        //   if (res.payload.success) {
+        //     props.history.push("/");
+        //   } else {
+        //     alert(res.payload.message);
+        //   }
+        // })
+        // .catch((err) => {
+        //   console.log(err);
+        // });
+
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -81,7 +133,7 @@ export const SignUp = () => {
                             alignItems: 'center',
                         }}
                     >
-                        Figure
+                        <Link href="/" underline="none">Figure</Link>
                     </Typography>
 
                     <InputLabel sx={{ mt: 3,fontWeight: 'bold'}}>
@@ -193,21 +245,21 @@ export const SignUp = () => {
                   
 
                     <FormControlLabel 
-                        control={<Checkbox value='agree' color='primary' />} 
+                        control={<Checkbox color='primary' onChange={onAgreeHandler}/>} 
                         label='동의 체크'
                     />
             
                     <Button 
-                        type='submit' 
                         variant='contained' 
                         size='large'
                         fullWidth
                         sx={{ mt: 3, mb:2, color: 'white'}}
+                        onClick={onSubmitHandler}
                     >
                         가입하기
                     </Button>
                         
-                        
+                    <Alert open={openAlert} onClose={onCloseAlertHandler} message={msg} title={""}/>
                 </Container>
             </ThemeProvider>
         </motion.div>
