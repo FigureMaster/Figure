@@ -1,10 +1,9 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
-import { orange } from '@mui/material/colors';
 
 const Notice = () => {
     return (
-        <Box sx={{ minWidth: 300, p: 1, display: 'grid', gridTemplateColumns: { md: '1fr' }, gap: 2, backgroundColor: orange[500] }}>
-            <Card>
+        <Box sx={{ minWidth: 300, p: 1, display: 'grid', gridTemplateColumns: { md: '1fr' }, gap: 2 }}>
+            <Card sx={{":hover": {boxShadow: 20}}}>
                 <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '16px 16px 0 16px'}}>
                     <Typography sx={{ fontSize: 16 }}>
                         일정 알림

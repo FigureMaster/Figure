@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Menu, MenuProps as MuiMenuProps } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
 
 export const Modal = (props: any) => {
@@ -34,12 +35,27 @@ export const Modal = (props: any) => {
     );
 };
 
+
+const dropdownTheme = createTheme({
+    components: {
+        MuiMenu: {
+            styleOverrides: {
+                paper: {
+                    // backgroundColor: orange[500],
+                },
+            },
+        },
+    },
+});
+
 export const Dropdown = ({ open, ...props }: MuiMenuProps) => {
 
     return (
-        <Menu open={open} {...props}>
-            {props.children}
-        </Menu>
+        <ThemeProvider theme={dropdownTheme}>
+            <Menu open={open} {...props}>
+                {props.children}
+            </Menu>
+        </ThemeProvider>
     );
 };
 

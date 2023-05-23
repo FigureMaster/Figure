@@ -1,10 +1,9 @@
 import { Avatar, Box, Card, CardContent, Typography } from '@mui/material';
-import { orange } from '@mui/material/colors';
 import { Button } from '../common/button/Button';
 
 const Mail = () => {
     return (
-        <Box sx={{ minWidth: 300, p: 1, display: 'grid', gridTemplateColumns: { md: '1fr' }, gap: 2, backgroundColor: orange[500] }}>
+        <Box sx={{ minWidth: 300, p: 1, display: 'grid', gridTemplateColumns: { md: '1fr' }, gap: 2 }}>
             <Box sx={{ minWidth: 300, display: 'grid', gridTemplateColumns: { md: '1fr 1fr 2fr' }, gap: 2}}>
                 <Button label="받은 쪽지함"></Button>
                 <Button label="보낸 쪽지함"></Button>

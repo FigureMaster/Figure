@@ -13,6 +13,19 @@ import Notice from '../notice/Notice';
 import Profile from '../profile/Profile';
 import Mail from '../mail/Mail';
 import Search from '../search/Search';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { orange } from '@mui/material/colors';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#FFFFFF"
+        },
+        secondary: {
+            main: orange[500]
+        }
+    }
+});
 
 const Header = () => {
 
@@ -27,35 +40,31 @@ const Header = () => {
     const [notice, setNotice] = useState<null | HTMLElement>(null);
     const noticeOpen = Boolean(notice);
 
-    const [identity, setIdentity] = useState<null | HTMLElement>(null);
-    const identityOpen = Boolean(identity);
-
     const [setting, setSetting] = useState<null | HTMLElement>(null);
     const settingOpen = Boolean(setting);
 
     return (
-        <AppBar position="static">
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
-                <Button color='secondary' label="FIGURE" startIcon={<MenuIcon></MenuIcon>} variant="text"></Button>
-                <Box sx={{ display: 'flex' }}></Box>
-                <Box sx={{ display: 'flex' }}>
-                    <TextField onClick={handleSearch} color='secondary' size="small" InputProps={{ endAdornment: (<InputAdornment position="end"><IconButton><SearchIcon /></IconButton></InputAdornment>) }}></TextField>
-                    <Dropdown open={searchOpen} anchorEl={search} onClose={() => {setSearch(null)}}><Search></Search></Dropdown>
-                    <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setMail(event.currentTarget)}}><MailOutlineIcon /></IconButton>
-                    <Dropdown open={mailOpen} anchorEl={mail} onClose={() => {setMail(null)}}><Mail></Mail></Dropdown>
-                    <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setNotice(event.currentTarget)}}><NotificationsNoneIcon /></IconButton>
-                    <Dropdown open={noticeOpen} anchorEl={notice} onClose={() => {setNotice(null)}}><Notice></Notice></Dropdown>
-                    <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setIdentity(event.currentTarget)}}><PermIdentityIcon /></IconButton>
-                    <Dropdown open={identityOpen} anchorEl={identity} onClose={() => {setIdentity(null)}}><Profile></Profile></Dropdown>
-                    <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setSetting(event.currentTarget)}}><SettingsIcon /></IconButton>
-                    <Dropdown open={settingOpen} anchorEl={setting} onClose={() => {setSetting(null)}}>
-                        <MenuItem>Profile</MenuItem>
-                        <MenuItem>My account</MenuItem>
-                        <MenuItem>Logout</MenuItem>
-                    </Dropdown>
+        <ThemeProvider theme={theme}>
+            <AppBar position="static">
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+                    <Box sx={{ display: 'flex' }}></Box>
+                    <Box sx={{ display: 'flex' }}>
+                        <TextField onClick={handleSearch} color='secondary' size="small" InputProps={{ endAdornment: (<InputAdornment position="end"><IconButton><SearchIcon /></IconButton></InputAdornment>) }}></TextField>
+                        <Dropdown open={searchOpen} anchorEl={search} onClose={() => {setSearch(null)}}><Search></Search></Dropdown>
+                        <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setMail(event.currentTarget)}}><MailOutlineIcon color='secondary' /></IconButton>
+                        <Dropdown open={mailOpen} anchorEl={mail} onClose={() => {setMail(null)}}><Mail></Mail></Dropdown>
+                        <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setNotice(event.currentTarget)}}><NotificationsNoneIcon color='secondary' /></IconButton>
+                        <Dropdown open={noticeOpen} anchorEl={notice} onClose={() => {setNotice(null)}}><Notice></Notice></Dropdown>
+                        <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setSetting(event.currentTarget)}}><SettingsIcon color='secondary' /></IconButton>
+                        <Dropdown open={settingOpen} anchorEl={setting} onClose={() => {setSetting(null)}}>
+                            <MenuItem>Profile</MenuItem>
+                            <MenuItem>My account</MenuItem>
+                            <MenuItem>Logout</MenuItem>
+                        </Dropdown>
+                    </Box>
                 </Box>
-            </Box>
-        </AppBar>
+            </AppBar>
+        </ThemeProvider>
     );
 };
 
