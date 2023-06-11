@@ -1,15 +1,14 @@
-import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import './modal.scss';
+import { ClickAwayListener, Fade, PopperProps as MuiPopperProps, Paper, Popper } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Menu, MenuProps as MuiMenuProps } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { orange } from '@mui/material/colors';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import React from 'react';
+import './modal.css';
 
 export const Modal = (props: any) => {
     const descriptionElementRef = React.useRef<HTMLElement>(null);
@@ -35,26 +34,34 @@ export const Modal = (props: any) => {
     );
 };
 
-
 const dropdownTheme = createTheme({
     components: {
         MuiMenu: {
             styleOverrides: {
                 paper: {
                     // backgroundColor: orange[500],
-                },
-            },
-        },
-    },
+                }
+            }
+        }
+    }
 });
 
-export const Dropdown = ({ open, ...props }: MuiMenuProps) => {
-
+export const Dropdown = ({ open, anchorEl, ...props }: MuiPopperProps) => {
     return (
         <ThemeProvider theme={dropdownTheme}>
-            <Menu open={open} {...props}>
-                {props.children}
-            </Menu>
+            <Popper open={open} anchorEl={anchorEl} placement='bottom' transition disablePortal {...props}>
+                {({ TransitionProps, placement }) => (
+                    <Fade {...TransitionProps} >
+                        <Paper>
+                            <ClickAwayListener onClickAway={() => {}}>
+                                <>
+                                    {props.children}
+                                </>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Fade>
+                )}
+            </Popper>
         </ThemeProvider>
     );
 };
@@ -75,7 +82,9 @@ export const Alert = (props: CustomAlertProps) => {
                     {props.title}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">{props.message}</DialogContentText>
+                    <DialogContentText id="alert-dialog-description">
+                        <pre className="alert-text">{props.message}</pre>
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.onClose} autoFocus>

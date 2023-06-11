@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from "react";
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
 import { InputLabel } from '@mui/material';
 import { motion } from "framer-motion";
+import { Alert } from '../common/modal/Modal';
+import { loginUser } from "../../actions/userAction";
 
 const theme = createTheme({
     palette: {
@@ -26,6 +28,75 @@ const theme = createTheme({
 
 
 export const Login = () => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [openAlert, setOpenAlert] = useState(false);
+    const [msg, setMsg] = useState("");
+
+    const onEmailHandler = (event) => {
+        setEmail(event.currentTarget.value)
+    }
+    
+    const onPasswordHandler = (event) => {
+        setPassword(event.currentTarget.value)
+    }
+
+    const onCloseAlertHandler = () => setOpenAlert(false);
+
+    const showErrorMsg = (err = '오류가 발생하였습니다.') => {
+        setOpenAlert(true);
+        setMsg(err);
+    }
+
+    const onSubmitHandler = () => {
+        let errorMsg = '';
+        setMsg(errorMsg);
+        if(!email) errorMsg += '이메일을 입력해주세요';
+        if(!password) errorMsg += (!!errorMsg ? '\n' : '') + '비밀번호를 입력해주세요';
+
+
+        if(!!errorMsg) {
+            showErrorMsg(errorMsg);
+            return;
+        }
+
+        const data = {
+            email: email,
+            password: password
+        };
+
+        loginUser(data)
+        .then((res) => {
+            if(!!res && !!res.result) {
+                const result = res.result;
+                if(result == 'success') {
+                    alert('로그인 성공');
+                    return;
+                } else if(result == 'fail' && !!res.msg) {
+                    showErrorMsg(res.msg);
+                    return;
+                }
+            }
+            showErrorMsg();
+            
+        })
+        .catch((err) => {
+            console.log(err);
+            showErrorMsg();
+        });
+        // dispatch(loginUser(data)).then((res) => {
+        //   console.log(res);
+        //   if (res.payload.success) {
+        //     props.history.push("/");
+        //   } else {
+        //     alert(res.payload.message);
+        //   }
+        // })
+        // .catch((err) => {
+        //   console.log(err);
+        // });
+
+    }
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -57,6 +128,7 @@ export const Login = () => {
                             autoFocus
                             required
                             fullWidth
+                            onChange={onEmailHandler}
                         />
                         <TextField 
                             label='Password'
@@ -69,6 +141,7 @@ export const Login = () => {
                             }}
                             required
                             fullWidth
+                            onChange={onPasswordHandler}
                         />
                         <Grid container>
                             <Grid item>
@@ -86,17 +159,17 @@ export const Login = () => {
                         </Grid>
                 
                         <Button 
-                            type='submit' 
                             variant='contained' 
                             size='large'
                             fullWidth
                             sx={{ mt: 3, mb:2, color: 'white'}}
+                            onClick={onSubmitHandler}
                         >
                             로그인
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" underline="none">회원가입</Link>
+                                <Link href="/signUp" underline="none">회원가입</Link>
                             </Grid>
                             <Grid item>
                                 <Link href="/passwordFinder" underline="none">비밀번호 찾기</Link>
@@ -133,8 +206,20 @@ export const Login = () => {
                                 </Button>
                             </Grid>
                         </Grid>
-                        
+                        {/* 마이페이지 이동(임시) */}
+                        <Grid container style={{margin: '30px'}}>
+                            <Grid item xs>
+                                <Link href="/myPage" underline="none">마이페이지(임시)</Link>
+                            </Grid>
+                        </Grid>                      
+                        {/* 메인 이동(임시) */}
+                        <Grid container style={{margin: '30px'}}>
+                            <Grid item xs>
+                                <Link href="/main" underline="none">메인(임시)</Link>
+                            </Grid>
+                        </Grid>                      
                     </Box>
+                    <Alert open={openAlert} onClose={onCloseAlertHandler} message={msg} title={""}/>
                 </Container>
             </ThemeProvider>
         </motion.div>

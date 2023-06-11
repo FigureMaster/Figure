@@ -11,7 +11,7 @@ const Mail = () => {
                     <Button label="쪽지 작성"></Button>
                 </Box>
             </Box>
-            <Card>
+            <Card sx={{":hover": {boxShadow: 5}}}>
                 <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Avatar src="/broken-image.jpg"></Avatar>
                     <Box>
@@ -29,11 +29,11 @@ const Mail = () => {
                         <Typography sx={{ fontSize: 14 }} color="text.secondary">
                             10:56 AM
                         </Typography>
-                        <Button label="확인"></Button>
+                        {/* <Button label="확인"></Button> */}
                     </Box>
                 </CardContent>
             </Card>
-            <Card>
+            <Card sx={{":hover": {boxShadow: 5}}}>
                 <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Avatar src="/broken-image.jpg"></Avatar>
                     <Box>
@@ -51,7 +51,7 @@ const Mail = () => {
                         <Typography sx={{ fontSize: 14 }} color="text.secondary">
                             10:56 AM
                         </Typography>
-                        <Button label="확인"></Button>
+                        {/* <Button label="확인"></Button> */}
                     </Box>
                 </CardContent>
             </Card>

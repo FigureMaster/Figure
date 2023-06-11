@@ -1,20 +1,17 @@
-import AppBar from '@mui/material/AppBar';
-import { Button, IconButton } from '../common/button/Button';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Box, InputAdornment, Menu, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
-import { Dropdown } from '../common/modal/Modal';
-import Notice from '../notice/Notice';
-import Profile from '../profile/Profile';
-import Mail from '../mail/Mail';
-import Search from '../search/Search';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Box, InputAdornment, MenuItem, MenuList, TextField } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
 import { orange } from '@mui/material/colors';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useState } from 'react';
+import { IconButton } from '../common/button/Button';
+import { Dropdown } from '../common/modal/Modal';
+import Mail from '../mail/Mail';
+import Notice from '../notice/Notice';
+import Search from '../search/Search';
 
 const theme = createTheme({
     palette: {
@@ -29,19 +26,37 @@ const theme = createTheme({
 
 const Header = () => {
 
-    const [search, setSearch] = useState<null | HTMLElement>(null);
-    const searchOpen = Boolean(search);
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const handleClick = (target: string) =>
+        (event: React.MouseEvent<HTMLElement>) => {
+            setAnchorEl(event.currentTarget);
+            if (target === "search") {
+                setSearchOpen(!searchOpen);
+                setMailOpen(false);
+                setNoticeOpen(false);
+                setSettingOpen(false);
+            } else if (target === "mail") {
+                setSearchOpen(false);
+                setMailOpen(!mailOpen);
+                setNoticeOpen(false);
+                setSettingOpen(false);
+            } else if (target === "notice") {
+                setSearchOpen(false);
+                setMailOpen(false);
+                setNoticeOpen(!noticeOpen);
+                setSettingOpen(false);
+            } else if (target === "setting") {
+                setSearchOpen(false);
+                setMailOpen(false);
+                setNoticeOpen(false);
+                setSettingOpen(!settingOpen);
+            } 
+        };
 
-    const handleSearch = (event) => {setSearch(event.currentTarget)};
-
-    const [mail, setMail] = useState<null | HTMLElement>(null);
-    const mailOpen = Boolean(mail);
-
-    const [notice, setNotice] = useState<null | HTMLElement>(null);
-    const noticeOpen = Boolean(notice);
-
-    const [setting, setSetting] = useState<null | HTMLElement>(null);
-    const settingOpen = Boolean(setting);
+    const [searchOpen, setSearchOpen] = useState<boolean>(false);
+    const [mailOpen, setMailOpen] = useState<boolean>(false);
+    const [noticeOpen, setNoticeOpen] = useState<boolean>(false);
+    const [settingOpen, setSettingOpen] = useState<boolean>(false);
 
     return (
         <ThemeProvider theme={theme}>
@@ -49,17 +64,19 @@ const Header = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
                     <Box sx={{ display: 'flex' }}></Box>
                     <Box sx={{ display: 'flex' }}>
-                        <TextField onClick={handleSearch} color='secondary' size="small" InputProps={{ endAdornment: (<InputAdornment position="end"><IconButton><SearchIcon /></IconButton></InputAdornment>) }}></TextField>
-                        <Dropdown open={searchOpen} anchorEl={search} onClose={() => {setSearch(null)}}><Search></Search></Dropdown>
-                        <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setMail(event.currentTarget)}}><MailOutlineIcon color='secondary' /></IconButton>
-                        <Dropdown open={mailOpen} anchorEl={mail} onClose={() => {setMail(null)}}><Mail></Mail></Dropdown>
-                        <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setNotice(event.currentTarget)}}><NotificationsNoneIcon color='secondary' /></IconButton>
-                        <Dropdown open={noticeOpen} anchorEl={notice} onClose={() => {setNotice(null)}}><Notice></Notice></Dropdown>
-                        <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setSetting(event.currentTarget)}}><SettingsIcon color='secondary' /></IconButton>
-                        <Dropdown open={settingOpen} anchorEl={setting} onClose={() => {setSetting(null)}}>
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>My account</MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                        <TextField onClick={handleClick("search")} color='secondary' size="small" InputProps={{ endAdornment: (<InputAdornment position="end"><IconButton><SearchIcon /></IconButton></InputAdornment>) }}></TextField>
+                        <Dropdown open={searchOpen} anchorEl={anchorEl}><Search></Search></Dropdown>
+                        <IconButton onClick={handleClick("mail")}><MailOutlineIcon color='secondary' /></IconButton>
+                        <Dropdown open={mailOpen} anchorEl={anchorEl}><Mail></Mail></Dropdown>
+                        <IconButton onClick={handleClick("notice")}><NotificationsNoneIcon color='secondary' /></IconButton>
+                        <Dropdown open={noticeOpen} anchorEl={anchorEl}><Notice></Notice></Dropdown>
+                        <IconButton onClick={handleClick("setting")}><SettingsIcon color='secondary' /></IconButton>
+                        <Dropdown open={settingOpen} anchorEl={anchorEl}>
+                            <MenuList>
+                                <MenuItem>Profile</MenuItem>
+                                <MenuItem>My account</MenuItem>
+                                <MenuItem>Logout</MenuItem>
+                            </MenuList>
                         </Dropdown>
                     </Box>
                 </Box>

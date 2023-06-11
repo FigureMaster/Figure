@@ -1,9 +1,21 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { getUserNotices } from '../../actions/userAction';
 
 const Notice = () => {
+
+    const [notices, setNotices] = useState([]);
+
+    useEffect(() => {
+        getUserNotices(3)
+        .then(response => {
+            setNotices(response);
+        });
+    }, []); 
+
     return (
         <Box sx={{ minWidth: 300, p: 1, display: 'grid', gridTemplateColumns: { md: '1fr' }, gap: 2 }}>
-            <Card sx={{":hover": {boxShadow: 20}}}>
+            <Card sx={{":hover": {boxShadow: 5}}}>
                 <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '16px 16px 0 16px'}}>
                     <Typography sx={{ fontSize: 16 }}>
                         일정 알림
@@ -18,7 +30,7 @@ const Notice = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            <Card>
+            <Card sx={{":hover": {boxShadow: 5}}}>
                 <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '16px 16px 0 16px'}}>
                     <Typography sx={{ fontSize: 16 }}>
                         일정 알림
@@ -33,7 +45,7 @@ const Notice = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            <Card>
+            <Card sx={{":hover": {boxShadow: 5}}}>
                 <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '16px 16px 0 16px'}}>
                     <Typography sx={{ fontSize: 16 }}>
                         일정 알림
