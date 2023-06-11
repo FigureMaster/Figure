@@ -2,3 +2,7 @@
     cursor: pointer;
     float: right;
   }
+
+.alert-text {
+  min-width: 400px;
+}
