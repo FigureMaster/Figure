@@ -212,6 +212,12 @@ export const Login = () => {
                                 <Link href="/myPage" underline="none">마이페이지(임시)</Link>
                             </Grid>
                         </Grid>                      
+                        {/* 메인 이동(임시) */}
+                        <Grid container style={{margin: '30px'}}>
+                            <Grid item xs>
+                                <Link href="/main" underline="none">메인(임시)</Link>
+                            </Grid>
+                        </Grid>                      
                     </Box>
                     <Alert open={openAlert} onClose={onCloseAlertHandler} message={msg} title={""}/>
                 </Container>
