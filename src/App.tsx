@@ -6,20 +6,22 @@ import { Login } from "./components/login/Login";
 import { PasswordFinder } from "./components/login/PasswordFinder";
 import { SignUp } from "./components/login/SignUp";
 import { MyPage } from "./components/myPage/MyPage";
+import Main from './components/main/Main';
 import PageInterceptor from "./actions/PageInterceptor";
 
 interface Menu {
-  path: string
-  element: JSX.Element
+    path: string;
+    element: JSX.Element;
 }
 
 const menus: Menu[]  = [
   {path : '*', element: <Navigate replace to='/' /> },
-  {path : '/', element: <MyPage/> },
+  {path : '/', element: <Main/> }, 
   {path : '/login', element: <Login/> },
   {path : '/passwordFinder', element: <PasswordFinder/> },
   {path : '/signUp', element: <SignUp/> },
-  {path : '/myPage', element: <MyPage/> }
+  {path : '/myPage', element: <MyPage/> },
+  {path : '/main', element: <Main /> } // 제거해도 되는지 물어보고 제거 필요
 ]
 
 const App = () => {
@@ -61,6 +63,6 @@ const App = () => {
       </AnimatePresence>
     </BrowserRouter>
   )
-}
+};
 
 export default App;
