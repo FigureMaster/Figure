@@ -12,6 +12,7 @@ import { Dropdown } from '../common/modal/Modal';
 import Mail from '../mail/Mail';
 import Notice from '../notice/Notice';
 import Search from '../search/Search';
+import {useNavigate } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -58,6 +59,8 @@ const Header = () => {
     const [noticeOpen, setNoticeOpen] = useState<boolean>(false);
     const [settingOpen, setSettingOpen] = useState<boolean>(false);
 
+    const navigate = useNavigate();
+
     return (
         <ThemeProvider theme={theme}>
             <AppBar position="static">
@@ -75,7 +78,14 @@ const Header = () => {
                             <MenuList>
                                 <MenuItem>Profile</MenuItem>
                                 <MenuItem>My account</MenuItem>
-                                <MenuItem>Logout</MenuItem>
+                                <MenuItem
+                                    onClick={
+                                        () => {
+                                            sessionStorage.removeItem('isAuthorized');
+                                            navigate('/login', { replace: true});
+                                        }
+                                    }
+                                >Logout</MenuItem>
                             </MenuList>
                         </Dropdown>
                     </Box>
