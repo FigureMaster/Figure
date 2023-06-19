@@ -15,19 +15,14 @@ const theme = createTheme({
     },
   });
 
-export const TopTab = () => {
-    const [currentTab, setCurrentTab] = useState("");
-    
+export const TopTab = ({ currentTab, handleTabsChange }) => {   
     const tabs = [
-        { id : 1, label : '활동내역' },
-        { id : 2, label : '태그된글' },
-        { id : 3, label : '북마크' },
-        { id : 4, label : 'Members'}
+        { id : 1, label : 'My Projects' },
+        { id : 2, label : 'Activity' },
+        { id : 3, label : 'Tag' },
+        { id : 4, label : 'Bookmark' },
+        { id : 5, label : 'Members' }
     ];
-
-    const handleTabsChange = (e, newCurrentTab) => {
-        setCurrentTab(newCurrentTab);
-    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -37,14 +32,12 @@ export const TopTab = () => {
                 onChange={handleTabsChange}                                                        
                 textColor="primary"                           
                 value={currentTab}                            
-                // variant="scrollable"
-                // scrollButtons="auto" 
                 centered                          
                 >                                               
                 {tabs.map((tab) => (                          
                     <Tab
                     sx={{ width: '20%', fontSize: 20}}                                         
-                    key={tab.id}                           
+                    key={tab.id}  //컴포넌트를 유일하게 식별하기 위한 값(탭 선택과는 무관)                          
                     label={
                         <Typography                             
                         sx={{                                 
@@ -59,7 +52,7 @@ export const TopTab = () => {
                         {tab.label}                           
                         </Typography>
                     }                                                      
-                    value={tab.id}                         
+                    value={tab.id} //선택된 탭을 구분하기 위한 값                        
                     />                                          
                 ))}                                           
                 </Tabs>
