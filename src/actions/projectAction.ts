@@ -2,7 +2,9 @@ import { request } from "../utils/axios";
 
 const PROJECT_URL = "/project";
 
-// TODO : restful한 url로 변경하여 수정하기 !!!
+export function createProject(dataToSubmit) {
+  return request("post", PROJECT_URL + "/create", dataToSubmit);
+}
 
 export function getAllProjects() {
   return request("get", PROJECT_URL + "/all", null);

@@ -4,6 +4,7 @@ import {BrowserRouter,Routes,Route,Navigate,useNavigate } from "react-router-dom
 import { AnimatePresence } from "framer-motion";
 import { Login } from "./components/login/Login";
 import { PasswordFinder } from "./components/login/PasswordFinder";
+import { TestProject } from "./components/project/TestProject";
 import { SignUp } from "./components/login/SignUp";
 import { MyPage } from "./components/myPage/MyPage";
 import Main from './components/main/Main';
@@ -21,6 +22,7 @@ const menus: Menu[]  = [
   {path : '/passwordFinder', element: <PasswordFinder/> },
   {path : '/signUp', element: <SignUp/> },
   {path : '/myPage', element: <MyPage/> },
+  {path : '/testProject', element: <TestProject/> },
   {path : '/main', element: <Main /> } // 제거해도 되는지 물어보고 제거 필요
 ]
 
