@@ -17,6 +17,7 @@ import { InputLabel } from '@mui/material';
 import { motion } from "framer-motion";
 import { Alert } from '../common/modal/Modal';
 import { loginUser } from "../../actions/userAction";
+import {useNavigate } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -33,6 +34,8 @@ export const Login = () => {
     const [openAlert, setOpenAlert] = useState(false);
     const [msg, setMsg] = useState("");
 
+    const navigate = useNavigate();
+
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value)
     }
@@ -47,6 +50,12 @@ export const Login = () => {
         setOpenAlert(true);
         setMsg(err);
     }
+
+    const onEnterHandler = (e) => {
+        if(e.key === 'Enter') {
+        onSubmitHandler();
+        }
+      }
 
     const onSubmitHandler = () => {
         let errorMsg = '';
@@ -67,10 +76,13 @@ export const Login = () => {
 
         loginUser(data)
         .then((res) => {
+            console.log(res);
             if(!!res && !!res.result) {
                 const result = res.result;
-                if(result == 'success') {
-                    alert('로그인 성공');
+                if(result == 'success' && !!res.token) {
+                    sessionStorage.setItem("isAuthorized", res.token);
+                    console.log(res.token);
+                    navigate('/', { replace: true});
                     return;
                 } else if(result == 'fail' && !!res.msg) {
                     showErrorMsg(res.msg);
@@ -104,7 +116,7 @@ export const Login = () => {
             exit={{ opacity: 0 }}
         >
             <ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs">
+                <Container component="main" maxWidth="xs" onKeyDown={onEnterHandler}>
                     <Box
                         sx={{
                             marginTop: 8,
@@ -210,6 +222,12 @@ export const Login = () => {
                         <Grid container style={{margin: '30px'}}>
                             <Grid item xs>
                                 <Link href="/myPage" underline="none">마이페이지(임시)</Link>
+                            </Grid>
+                        </Grid>                      
+                        {/* 메인 이동(임시) */}
+                        <Grid container style={{margin: '30px'}}>
+                            <Grid item xs>
+                                <Link href="/main" underline="none">메인(임시)</Link>
                             </Grid>
                         </Grid>                      
                     </Box>

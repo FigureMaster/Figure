@@ -1,6 +1,7 @@
 import React from 'react';
 import MuiButton from '@mui/material/Button';
 import MuiIconButton from '@mui/material/IconButton';
+import { orange } from '@mui/material/colors';
 import { createTheme, ThemeProvider, IconButtonProps as MuiIconButtonProps, ButtonProps as MuiButtonProps } from '@mui/material';
 
 const { palette } = createTheme();
@@ -8,7 +9,7 @@ const { augmentColor } = palette;
 const createColor = (mainColor: string) => augmentColor({ color: { main: mainColor } });
 const theme = createTheme({
     palette: {
-        primary: createColor('#D96846'),
+        primary: createColor(orange[500]),
         secondary: createColor('#696969')
     },
 });
