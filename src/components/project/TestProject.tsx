@@ -23,6 +23,7 @@ export const TestProject = () => {
         setIsOpen(copy);
     }
 
+
     return (
         <>
         <div>
@@ -30,10 +31,9 @@ export const TestProject = () => {
             <Button label='프로젝트 정보 수정' onClick={()=>{onOpen(1)}}/>
             <Button label='멤버 초대' onClick={()=>{onOpen(2)}}/>
 
-            <Modal open={isOpen[0]} children={<CreateProject/>} onClose={()=>{onOpen(0)}} maxWidth='xl' width={800} />
+            <Modal open={isOpen[0]} children={<CreateProject onOpen={onOpen}/>} onClose={()=>{onOpen(0)}} maxWidth='xl' width={800} />
             <Modal open={isOpen[1]} children={<UpdateProject/>} onClose={()=>{onOpen(1)}} maxWidth='xl' width={400} />
             <Modal open={isOpen[2]} children={<MemberInviteModal/>} onClose={()=>{onOpen(2)}} maxWidth='xl' width={800} />
-
         </div>
         </>
     )

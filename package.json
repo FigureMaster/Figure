@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.js --open --hot",
     "build": "webpack --config webpack.prod.js",
-    "start": "webpack --config webpack.dev.js"
+    "start": "webpack --config webpack.dev.js",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache"
   },
   "author": "figure_master",
   "license": "ISC",
@@ -24,7 +25,7 @@
     "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5",
+    "react-redux": "^8.0.7",
     "react-router-dom": "^6.10.0",
     "redux": "^4.2.1",
     "redux-promise": "^0.6.0",

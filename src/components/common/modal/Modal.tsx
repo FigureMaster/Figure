@@ -84,3 +84,35 @@ interface CustomAlertProps {
     );
   }
 
+  // confirm 모달 추가
+  export const AlertDialog = (props: any) => {  
+    return (
+      <div>
+        <Dialog
+          open={props.open}
+          onClose={props.onClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+          <CloseIcon onClick={props.onClose} className="modal-close" />
+            {props.title}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {props.message}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={props.onClose}>
+              취소
+            </Button>
+            <Button onClick={props.onConfirm} autoFocus>
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
+
