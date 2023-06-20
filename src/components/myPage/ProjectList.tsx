@@ -7,45 +7,67 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
+import { Divider } from "@mui/material";
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import Box from '@mui/material/Box';
+import { getUserProjects, saveBookmark } from "../../actions/projectAction";
 
 const theme = createTheme({
     palette: {
-      primary: {
+        primary: {
         main: orange[500],
-      },
+        },
     },
-  });
+});
 
 interface Project {
     id: number;
     name: string;
     bookmarked: boolean;
-    desc : string;
+    description : string;
 }
 
-const initProjects: Project[] = [
-    { id : 1, name : 'lamp7', bookmarked: true, desc : 'test'},
-    { id : 2, name : 'ssam', bookmarked: true , desc : 'test'},
-    { id : 3, name : 'demo', bookmarked: false , desc : 'test'},
-    { id : 4, name : 'studio65', bookmarked: false , desc : 'test'},
-    { id : 5, name : 'jisanware', bookmarked: false , desc : 'test'},
-    { id : 6, name : 'hdpoc', bookmarked: false , desc : 'test'},
-    { id : 7, name : 'skpoc', bookmarked: false , desc : 'test'},
-    { id : 8, name : 'design', bookmarked: false , desc : 'test'},
-    { id : 9, name : 'test', bookmarked: false , desc : 'test'},
-];
-
+const userId = 3; //임시
 
 export const ProjectList = () => {
-    const [projects, setProjects] = useState<Project[]>(initProjects);
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        getUserProjects(userId)
+        .then((res) => {
+            console.log('data:' + res);
+            setProjects(res);
+        }) 
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     const toggleBookmark = (id: number) => {
-        setProjects(projects.map((project) => project.id === id ? {...project, bookmarked: !project.bookmarked} : project))
+        const data = {
+            userId: userId,
+            projectId: id
+        }
+
+        saveBookmark(data)
+        .then((res) => {
+            if (!!res && !!res.projectId) {
+                setProjects((prevProjects) =>
+                    prevProjects.map((project) =>
+                        project.id === id ? { ...project, bookmarked: !project.bookmarked } : project
+                    )
+                );
+            }
+        }) 
+        .catch((err) => {
+            console.log(err);
+        });
+
     };
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xl">
+            <Container component="main" maxWidth="xl" sx={{borderLeft: '4px solid orange'}}>
                 <Typography variant='h4' color='black' sx={{marginTop: 10, marginBottom: 5}}>
                     Favorite
                 </Typography>
@@ -54,7 +76,7 @@ export const ProjectList = () => {
                     .filter((project) => project.bookmarked)
                     .map((project) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={project.id}>
-                        <Card sx={{maxWidth: 400}}>
+                        <Card sx={{maxWidth: 350, height: 170}} elevation={5}>
                         <CardHeader
                             title={project.name}
                             action={
@@ -66,14 +88,26 @@ export const ProjectList = () => {
                             }
                         />
                         <CardContent>
-                            <p>{project.desc}</p>
+                            <p>{project.description}</p>
                         </CardContent>
                         </Card>
                     </Grid>
                     ))}
+                    {projects.filter((project) => project.bookmarked).length === 0 && projects.length >= 0 &&
+                    <Container component="main" maxWidth="xl">
+                        <Typography variant='h6' color='gray' sx={{marginLeft: 5 , marginTop: 5, marginBottom: 5}}>
+                            즐겨찾는 프로젝트가 없습니다.
+                        </Typography>
+                    </Container>
+                    }
                 </Grid>
             </Container>
+            
             <Container component="main" maxWidth="xl">
+                <Divider sx={{ marginTop: 10}} />
+            </Container>
+
+            <Container component="main" maxWidth="xl" sx={{borderLeft: '4px solid orange'}}>
                 <Typography variant='h4' color='black' sx={{marginTop: 10, marginBottom: 5}}>
                     Projects
                 </Typography>
@@ -82,23 +116,33 @@ export const ProjectList = () => {
                     .filter((project) => !project.bookmarked)
                     .map((project) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={project.id}>
-                        <Card sx={{maxWidth: 400}}>
-                        <CardHeader
-                            title={project.name}
-                            action={
-                            <IconButton onClick={() => toggleBookmark(project.id)}>
-                                {project.bookmarked ? 
-                                (<StarIcon color="primary" />) : (<StarBorderIcon />)
+                        <Card sx={{maxWidth: 350, height: 170}} elevation={5}>
+                            <CardHeader
+                                title={project.name}
+                                action={
+                                <IconButton onClick={() => toggleBookmark(project.id)}>
+                                    {project.bookmarked ? 
+                                    (<StarIcon color="primary" />) : (<StarBorderIcon />)
+                                    }
+                                </IconButton>
                                 }
-                            </IconButton>
-                            }
-                        />
-                        <CardContent>
-                            <p>{project.desc}</p>
-                        </CardContent>
+                            />
+                            <CardContent>
+                                <p>{project.description}</p>
+                            </CardContent>
                         </Card>
                     </Grid>
                     ))}
+                    {/* 프로젝트 생성 카드  */}
+                    <Grid item xs={12} sm={6} md={4} lg={3}>
+                        <Card sx={{maxWidth: 350 , height: 170}} elevation={5}>
+                            <Box display='flex' justifyContent='center' alignItems='center' height='100%'>
+                                <IconButton>
+                                    <ControlPointIcon style={{ fontSize: '100px', color: '#e0e0e0' }} />
+                                </IconButton>
+                            </Box>
+                        </Card>
+                    </Grid>
                 </Grid>
             </Container>
         </ThemeProvider>
