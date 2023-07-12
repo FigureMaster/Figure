@@ -4,6 +4,7 @@ import {BrowserRouter,Routes,Route,Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Login } from "./components/login/Login";
 import { PasswordFinder } from "./components/login/PasswordFinder";
+import { TestProject } from "./components/project/TestProject";
 import { SignUp } from "./components/login/SignUp";
 import { MyPage } from "./components/myPage/MyPage";
 import Main from './components/main/Main';
@@ -20,7 +21,8 @@ const menus: Menu[]  = [
   {path : '/login', element: <Login/> },
   {path : '/passwordFinder', element: <PasswordFinder/> },
   {path : '/signUp', element: <SignUp/> },
-  {path : '/myPage', element: <MyPage/> }
+  {path : '/myPage', element: <MyPage/> },
+  {path : '/testProject', element: <TestProject/> }
 ]
 
 const App = () => {          
