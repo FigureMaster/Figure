@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import './App.css';
-import {BrowserRouter,Routes,Route,Navigate,useNavigate } from "react-router-dom";
+import {BrowserRouter,Routes,Route,Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Login } from "./components/login/Login";
 import { PasswordFinder } from "./components/login/PasswordFinder";
@@ -20,28 +20,10 @@ const menus: Menu[]  = [
   {path : '/login', element: <Login/> },
   {path : '/passwordFinder', element: <PasswordFinder/> },
   {path : '/signUp', element: <SignUp/> },
-  {path : '/myPage', element: <MyPage/> },
-  {path : '/main', element: <Main /> } // 제거해도 되는지 물어보고 제거 필요
+  {path : '/myPage', element: <MyPage/> }
 ]
 
-const App = () => {
-  // const navigate = useNavigate();
-  // let isAuthorized = sessionStorage.getItem("isAuthorized");
-  // let isAuthorized = sessionStorage.getItem("isAuthorized");
- 
-  // useEffect(() => {
-  //   isAuthorized = sessionStorage.getItem("isAuthorized");
-  //   // navigate('/', { replace: true});
-  // }, [isAuthorized]);
-
-
-       // <Route 
-                //   path={menu.path} 
-                //   element={
-                //     !isAuthorized && menu.path !== '/login' && menu.path !== '/signUp' && menu.path !== '/passwordFinder' ? <Navigate replace to='/login' /> : menu.element
-                //   } 
-                //   />   
-                
+const App = () => {          
   return (
     <BrowserRouter>
       <AnimatePresence>

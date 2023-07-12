@@ -96,17 +96,6 @@ export const Login = () => {
             console.log(err);
             showErrorMsg();
         });
-        // dispatch(loginUser(data)).then((res) => {
-        //   console.log(res);
-        //   if (res.payload.success) {
-        //     props.history.push("/");
-        //   } else {
-        //     alert(res.payload.message);
-        //   }
-        // })
-        // .catch((err) => {
-        //   console.log(err);
-        // });
 
     }
     return (
@@ -217,19 +206,7 @@ export const Login = () => {
                                     카카오
                                 </Button>
                             </Grid>
-                        </Grid>
-                        {/* 마이페이지 이동(임시) */}
-                        <Grid container style={{margin: '30px'}}>
-                            <Grid item xs>
-                                <Link href="/myPage" underline="none">마이페이지(임시)</Link>
-                            </Grid>
-                        </Grid>                      
-                        {/* 메인 이동(임시) */}
-                        <Grid container style={{margin: '30px'}}>
-                            <Grid item xs>
-                                <Link href="/main" underline="none">메인(임시)</Link>
-                            </Grid>
-                        </Grid>                      
+                        </Grid>                   
                     </Box>
                     <Alert open={openAlert} onClose={onCloseAlertHandler} message={msg} title={""}/>
                 </Container>

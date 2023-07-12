@@ -1,6 +1,6 @@
 import { request } from "../utils/axios";
 
-const PROJECT_URL = "/project";
+import {PROJECT_URL} from "../components/common/CommonConstants";
 
 // TODO : restful한 url로 변경하여 수정하기 !!!
 
