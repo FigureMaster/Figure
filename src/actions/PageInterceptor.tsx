@@ -1,22 +1,24 @@
-import React, { useEffect } from "react";
-import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import React from "react";
+import { useLocation, Outlet, Navigate } from "react-router-dom";
+import { PUBLIC_PATHS } from "../components/common/CommonConstants";
+
 
 const PageInterceptor = () => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    let isAuthorized = sessionStorage.getItem("isAuthorized");
-    if (!isAuthorized) {
-      navigate("/login", { state: pathname });
-    }
-  }, []);
+  const isAuthorized = sessionStorage.getItem("isAuthorized");
+  const isPublicPath = PUBLIC_PATHS.includes(pathname);
+  let redirect = '';
 
-  return (
-    <div>
-      <Outlet />
-    </div>
-  )
+  if (!isAuthorized && !isPublicPath) {
+    redirect = '/login';
+  } else if (isAuthorized && isPublicPath) {
+    redirect = '/';
+  }
+
+
+  return !!redirect ? <Navigate to={redirect} /> : <Outlet />;
+
 };
 
 export default PageInterceptor;
