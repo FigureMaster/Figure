@@ -130,7 +130,7 @@ export const SignUp = (props) => {
 
         setLoading(true);
 
-        mailAuthenticate(email)
+        mailAuthenticate(email, '01')
         .then((res) => {
             if(res == 'isEmailDuplicated') {
                 setEmailCheckMsg('이미 존재하는 이메일 입니다.');
@@ -204,11 +204,13 @@ export const SignUp = (props) => {
                 navigate('/', { replace: true});
             } else {
                 console.log('회원가입 실패');
+                showErrorMsg();
             }
             
         })
         .catch((err) => {
             console.log(err);
+            showErrorMsg();
         });
 
     }
