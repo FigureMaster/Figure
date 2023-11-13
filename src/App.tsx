@@ -33,7 +33,7 @@ const App = () => {
           {
             menus.map(menu => {
               return (
-                <Route element={<PageInterceptor />}>
+                <Route key={menu.path} element={<PageInterceptor />}>
                   <Route 
                     path={menu.path} 
                     element={menu.element} 

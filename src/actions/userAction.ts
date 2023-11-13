@@ -9,8 +9,9 @@ export function loginUser(dataToSubmit) {
     return request('post', USER_URL + '/login', dataToSubmit);
 }
 
-export function getUserProjects(userId: number) {
-    return request('get', `${USER_URL}/${userId.toString()}${PROJECT_URL}`, undefined);
+export function getUserProjects() {
+    const token = sessionStorage.getItem('isAuthorized');
+    return request('get', `${USER_URL}${PROJECT_URL}?token=${token}`, undefined);
 }
 
 export function getUserNotices(userId: number) {

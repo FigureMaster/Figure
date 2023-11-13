@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { orange } from "@mui/material/colors";
 import { Divider } from "@mui/material";
 import { getUserProjects, getProjectUsers } from "../../actions/projectAction";
+import { Project, User } from "../common/CommonInterfaces";
 
 const theme = createTheme({
     palette: {
@@ -15,21 +16,6 @@ const theme = createTheme({
     },
     },
 });
-
-interface Project {
-    id: number;
-    name: string;
-    bookmarked: boolean;
-    description : string;
-}
-
-interface User {
-    userId: number;
-    userEmail: string
-    userName: string;
-    userDesc: string;
-    projectName: string;
-}
 
 const userId = 3; //임시 
 
@@ -88,7 +74,7 @@ export const Members = () => {
                         select
                     >
                         {projects.map((project) => (
-                            <MenuItem key={project.id} value={project.id}>
+                            <MenuItem key={project.projectId} value={project.projectId}>
                             {project.name}
                             </MenuItem>
                         ))}
@@ -110,7 +96,7 @@ export const Members = () => {
                     </Grid>
                     <Grid item sx={{ minWidth: '40%' }}>
                         <Typography variant="subtitle1">
-                            {member.userName}
+                            {member.name}
                         </Typography>
                         <Typography variant="body2" color="gray">
                             {member.userDesc}
