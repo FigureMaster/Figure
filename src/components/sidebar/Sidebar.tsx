@@ -2,7 +2,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
-import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, styled } from '@mui/material';
+import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, ThemeProvider, createTheme, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getUserProjects } from '../../actions/userAction';
 import { Button } from '../common/button/Button';
@@ -18,12 +18,11 @@ const Sidebar = () => {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        getUserProjects(3)
-        .then((response) => {
+        getUserProjects().then((response) => {
             if (Array.isArray(response) && response.length > 0) {
                 setProjects(response);
             }
-        })
+        });
     }, []);
 
     return (
@@ -33,7 +32,13 @@ const Sidebar = () => {
                     <Button style={{ fontSize: '1.2rem', fontWeight: 'bold' }} label="FIGURE" variant="text"></Button>
                 </SidebarHeader>
 
-                <List subheader={<ListSubheader component="div" sx={{fontSize: '1.1rem'}} >Views</ListSubheader>}>
+                <List
+                    subheader={
+                        <ListSubheader component="div" sx={{ fontSize: '1.1rem' }}>
+                            Views
+                        </ListSubheader>
+                    }
+                >
                     <ListItem key={'Table'} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
@@ -68,14 +73,21 @@ const Sidebar = () => {
                     </ListItem>
                 </List>
                 <Divider />
-                <List subheader={<ListSubheader component="div" sx={{fontSize: '1.1rem'}}>Projects</ListSubheader>}>
-                    {projects.map(project => (
-                        <ListItem key={project.id} disablePadding>
+                <List
+                    subheader={
+                        <ListSubheader component="div" sx={{ fontSize: '1.1rem' }}>
+                            Projects
+                        </ListSubheader>
+                    }
+                >
+                    {projects.map((project) => (
+                        <ListItem key={project.projectId} disablePadding>
                             <ListItemButton>
                                 <ListItemText inset primary={project.name} />
                             </ListItemButton>
                         </ListItem>
-                    ))};
+                    ))}
+                    ;
                 </List>
             </Drawer>
         </Box>
