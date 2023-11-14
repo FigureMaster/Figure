@@ -25,7 +25,7 @@ const menus: Menu[]  = [
   {path : '/testProject', element: <TestProject/> }
 ]
 
-const App = () => {          
+const App:React.FC = () => {          
   return (
     <BrowserRouter>
       <AnimatePresence>

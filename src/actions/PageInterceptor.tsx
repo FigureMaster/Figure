@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
-import { PUBLIC_PATHS } from "../components/common/CommonConstants";
+import { PUBLIC_PATHS } from "../common/commonConstants";
 
 
 const PageInterceptor = () => {
