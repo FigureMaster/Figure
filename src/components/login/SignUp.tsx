@@ -16,7 +16,8 @@ import { signUpUser } from "../../actions/userAction";
 import {useNavigate } from "react-router-dom";
 import { mailAuthenticate, temporaryNumberCheck } from "../../actions/mailAction";
 import InputAdornment from '@mui/material/InputAdornment';
-import { PASSWORD_REGEX, EMAIL_REGEX} from '../common/CommonConstants';
+import { PASSWORD_REGEX, EMAIL_REGEX} from '../../common/commonConstants';
+import { TemporaryNumberCheckType, UserType } from "src/common/commonTypes";
 
 const theme = createTheme({
     palette: {
@@ -26,26 +27,26 @@ const theme = createTheme({
     },
   });
 
-export const SignUp = (props) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [name, setName] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [desc, setDesc] = useState("")
-    const [isEmailBlur, setEmailBlur] = useState(false)
-    const [isAgree, setAgree] = useState(false)
-    const [openAlert, setOpenAlert] = useState(false);
-    const [msg, setMsg] = useState("");
-    const [emailCheckMsg, setEmailCheckMsg] = useState("");
-    const [temporaryNumber, setTemporaryNumber] = useState("");
-    const [isEmailCheckOpen, setEmailCheckOpen] = useState(false);
-    const [isLoading, setLoading] = useState(false);
-    const [isTimeOver, setTimeOver] = useState(false);
-    const [emailCheckResult, setEmailCheckResult] = useState("");
-    const [isEmailCheck, setEmailCheck] = useState(false);
-    const [timerCount, setTimerCount] = useState(0);
-    const [time, setTime] = useState('');
-    let timer;
+export const SignUp:React.FC = () => {
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [name, setName] = useState<string>("")
+    const [confirmPassword, setConfirmPassword] = useState<string>("")
+    const [desc, setDesc] = useState<string>("")
+    const [isEmailBlur, setEmailBlur] = useState<boolean>(false)
+    const [isAgree, setAgree] = useState<boolean>(false)
+    const [openAlert, setOpenAlert] = useState<boolean>(false);
+    const [msg, setMsg] = useState<string>("");
+    const [emailCheckMsg, setEmailCheckMsg] = useState<string>("");
+    const [temporaryNumber, setTemporaryNumber] = useState<string>("");
+    const [isEmailCheckOpen, setEmailCheckOpen] = useState<boolean>(false);
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [isTimeOver, setTimeOver] = useState<boolean>(false);
+    const [emailCheckResult, setEmailCheckResult] = useState<string>("");
+    const [isEmailCheck, setEmailCheck] = useState<boolean>(false);
+    const [timerCount, setTimerCount] = useState<number>(0);
+    const [time, setTime] = useState<string>('');
+    let timer:NodeJS.Timeout;
 
     useEffect(() => {
         timer = setInterval(() => {
@@ -64,65 +65,65 @@ export const SignUp = (props) => {
     
     const navigate = useNavigate();
 
-    const onCloseAlertHandler = () => setOpenAlert(false);
+    const onCloseAlertHandler = ():void => setOpenAlert(false);
     
-    const onEmailHandler = (event) => {
+    const onEmailHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setEmail(event.currentTarget.value)
     }
     
-    const onPasswordHandler = (event) => {
+    const onPasswordHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setPassword(event.currentTarget.value)
     }
     
-    const onNameHandler = (event) => {
+    const onNameHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setName(event.currentTarget.value)
     }
     
-    const onConfirmPasswordHandler = (event) => {
+    const onConfirmPasswordHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setConfirmPassword(event.currentTarget.value)
     }
     
-    const onDescHandler = (event) => {
+    const onDescHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setDesc(event.currentTarget.value)
     }
 
-    const onAgreeHandler = () => {
+    const onAgreeHandler = ():void => {
         setAgree(!isAgree);
     }
 
-    const onTemporaryNumberHandler = (event) => {
+    const onTemporaryNumberHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setTemporaryNumber(event.currentTarget.value);
     }
     
     
-    const hasEmailError = () => {
+    const hasEmailError = ():boolean => {
         return !!email && !EMAIL_REGEX.test(email)
     }
     
-    const hasPasswordError = () => {
+    const hasPasswordError = ():boolean => {
         return !!password && !PASSWORD_REGEX.test(password)
     }
         
-    const hasNotSameError = () => !!confirmPassword && password != confirmPassword;
+    const hasNotSameError = ():boolean => !!confirmPassword && password != confirmPassword;
 
-    const onEmailFocusHandler = (isNotFocus:boolean) => {
+    const onEmailFocusHandler = (isNotFocus:boolean):void => {
         setEmailBlur(isNotFocus);
         setEmailCheckMsg('');
     }
 
-    const onEmailCheckReset = () => {
+    const onEmailCheckReset = ():void => {
         setEmailCheckOpen(false);
         setTemporaryNumber('');
         setEmailCheckResult('');
         setEmailCheckMsg('');
     }
 
-    const showErrorMsg = (err = '오류가 발생하였습니다.') => {
+    const showErrorMsg = (err:string = '오류가 발생하였습니다.'):void => {
         setOpenAlert(true);
         setMsg(err);
     }
 
-    const onEmailSendHandler = () => {
+    const onEmailSendHandler = ():void => {
         if(!email || hasEmailError()) {
             setEmailCheckMsg('이메일을 확인해주세요');
             return;
@@ -153,8 +154,8 @@ export const SignUp = (props) => {
         });
     }
 
-    const onTemporaryNumberCheckHandler = () => {
-        const data = {
+    const onTemporaryNumberCheckHandler = ():void => {
+        const data:TemporaryNumberCheckType = {
             email: email,
             temporaryNumber: temporaryNumber
         };
@@ -175,8 +176,8 @@ export const SignUp = (props) => {
         });
     }
 
-    const onSubmitHandler = () => {
-        let errorMsg = '';
+    const onSubmitHandler = ():void => {
+        let errorMsg:string = '';
         setMsg(errorMsg);
         if(!email || hasEmailError()) errorMsg += '이메일을 확인해주세요';
         if(!isEmailCheck) errorMsg += '이메일 인증을 완료해주세요';
@@ -189,7 +190,7 @@ export const SignUp = (props) => {
             return;
         }
 
-        const data = {
+        const data:UserType = {
             email: email,
             name: name,
             desc: desc,

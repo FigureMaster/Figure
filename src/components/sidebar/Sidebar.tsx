@@ -2,7 +2,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
-import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, ThemeProvider, createTheme, styled } from '@mui/material';
+import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getUserProjects } from '../../actions/userAction';
 import { Button } from '../common/button/Button';
@@ -13,7 +13,11 @@ const SidebarHeader = styled('header')(({ theme }) => ({
     padding: theme.spacing(1, 1)
 }));
 
-const Sidebar = () => {
+interface SidebarProps {
+    setProject: (projectId:number, projectName:string)=>void;
+} 
+
+const Sidebar:React.FC<SidebarProps> = ({setProject}) => {
     const [open, setOpen] = useState(true);
     const [projects, setProjects] = useState([]);
 
@@ -81,7 +85,7 @@ const Sidebar = () => {
                     }
                 >
                     {projects.map((project) => (
-                        <ListItem key={project.projectId} disablePadding>
+                        <ListItem key={project.projectId} disablePadding onClick={()=>setProject(project.projectId, project.name)}>
                             <ListItemButton>
                                 <ListItemText inset primary={project.name} />
                             </ListItemButton>

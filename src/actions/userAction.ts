@@ -1,12 +1,13 @@
 import { request } from '../utils/axios';
-import { USER_URL, PROJECT_URL, NOTICE_URL} from "../components/common/CommonConstants";
+import { USER_URL, PROJECT_URL, NOTICE_URL} from "../common/commonConstants";
+import { UserType } from 'src/common/commonTypes';
 
-export function signUpUser(dataToSubmit) {
-    return request('post', USER_URL + '/signUp', dataToSubmit);
+export function signUpUser(data:UserType) {
+    return request('post', USER_URL + '/signUp', data);
 }
 
-export function loginUser(dataToSubmit) {
-    return request('post', USER_URL + '/login', dataToSubmit);
+export function loginUser(data:UserType) {
+    return request('post', USER_URL + '/login', data);
 }
 
 export function getUserProjects() {

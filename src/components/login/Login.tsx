@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
@@ -18,6 +18,8 @@ import { motion } from "framer-motion";
 import { Alert } from '../common/modal/Modal';
 import { loginUser } from "../../actions/userAction";
 import {useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { UserType } from "src/common/commonTypes";
 
 const theme = createTheme({
     palette: {
@@ -28,37 +30,49 @@ const theme = createTheme({
   });
 
 
-export const Login = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [openAlert, setOpenAlert] = useState(false);
-    const [msg, setMsg] = useState("");
+export const Login:React.FC = () => {
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [openAlert, setOpenAlert] = useState<boolean>(false);
+    const [msg, setMsg] = useState<string>("");
+    const [isIdSave, setIdSave] = useState<boolean>(false);
+    const [cookies, setCookie, removeCookie] = useCookies<string>(["saveId"]);
+
+    useEffect(() => {
+        if(cookies.saveId !== undefined) {
+          setEmail(cookies.saveId);
+          setIdSave(true);
+        }
+     }, []);
 
     const navigate = useNavigate();
 
-    const onEmailHandler = (event) => {
+    const onEmailHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setEmail(event.currentTarget.value)
     }
     
-    const onPasswordHandler = (event) => {
+    const onPasswordHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setPassword(event.currentTarget.value)
     }
 
-    const onCloseAlertHandler = () => setOpenAlert(false);
+    const onCloseAlertHandler = ():void => setOpenAlert(false);
 
-    const showErrorMsg = (err = '오류가 발생하였습니다.') => {
+    const onSaveIdHandler = (event:React.ChangeEvent<HTMLInputElement>):void => setIdSave(event.target.checked);
+
+
+    const showErrorMsg = (err:string = '오류가 발생하였습니다.'):void => {
         setOpenAlert(true);
         setMsg(err);
     }
 
-    const onEnterHandler = (e) => {
-        if(e.key === 'Enter') {
+    const onEnterHandler = (event:React.KeyboardEvent):void => {
+        if(event.key === 'Enter') {
         onSubmitHandler();
         }
       }
 
-    const onSubmitHandler = () => {
-        let errorMsg = '';
+    const onSubmitHandler = ():void => {
+        let errorMsg:string = '';
         setMsg(errorMsg);
         if(!email) errorMsg += '이메일을 입력해주세요';
         if(!password) errorMsg += (!!errorMsg ? '\n' : '') + '비밀번호를 입력해주세요';
@@ -69,7 +83,7 @@ export const Login = () => {
             return;
         }
 
-        const data = {
+        const data:UserType = {
             email: email,
             password: password
         };
@@ -82,6 +96,11 @@ export const Login = () => {
                 if(result == 'success' && !!res.token) {
                     sessionStorage.setItem("isAuthorized", res.token);
                     console.log(res.token);
+                    if(isIdSave) {
+                        setCookie('saveId', email, {maxAge: 15*24*60*60});
+                    } else {
+                        removeCookie('saveId');
+                    }
                     navigate('/', { replace: true});
                     return;
                 } else if(result == 'fail' && !!res.msg) {
@@ -130,6 +149,7 @@ export const Login = () => {
                             required
                             fullWidth
                             onChange={onEmailHandler}
+                            value={email}
                         />
                         <TextField 
                             label='Password'
@@ -145,15 +165,15 @@ export const Login = () => {
                             onChange={onPasswordHandler}
                         />
                         <Grid container>
-                            <Grid item>
+                            {/* <Grid item>
                                 <FormControlLabel 
                                     control={<Checkbox value='maintainLogin' color='primary' />} 
                                     label='로그인 유지'
                                 />
-                            </Grid>
+                            </Grid> */}
                             <Grid item>
                                 <FormControlLabel 
-                                    control={<Checkbox value='saveId' color='primary' />} 
+                                    control={<Checkbox value='saveId' color='primary' onChange={onSaveIdHandler} checked={isIdSave}/>} 
                                     label='아이디 저장'
                                 />
                             </Grid>

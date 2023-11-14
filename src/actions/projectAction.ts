@@ -1,22 +1,27 @@
-import { request } from '../utils/axios';
-import { PROJECT_URL } from '../components/common/CommonConstants';
+import { request } from "../utils/axios";
+
+import {PROJECT_URL} from "../common/commonConstants";
 
 export function createProject(dataToSubmit) {
-    return request('post', PROJECT_URL + '/create', dataToSubmit);
+  return request("post", PROJECT_URL + "/create", dataToSubmit);
 }
 
 export function getAllProjects() {
-    return request('get', PROJECT_URL + '/all', null);
+  return request("get", PROJECT_URL + "/all", null);
 }
 
 export function getUserProjects(userId: number) {
-    return request('get', PROJECT_URL + '/list?userId=' + userId, null);
+  return request("get", PROJECT_URL + "/list?userId=" + userId, null);
 }
 
 export function saveBookmark(data) {
-    return request('post', PROJECT_URL + '/bookmark', data);
+  return request("post", PROJECT_URL + "/bookmark", data);
 }
 
 export function getProjectUsers(data) {
-    return request('post', PROJECT_URL + '/users', data);
+  return request("post", PROJECT_URL + "/users", data);
+}
+
+export function getProjectCategorys(projectId: number) {
+  return request('get', `${PROJECT_URL}/${projectId}/categorys`, null);
 }

@@ -14,9 +14,10 @@ import { Backdrop, CircularProgress, InputLabel } from '@mui/material';
 import { motion } from "framer-motion";
 import Grid from '@mui/material/Grid';
 import { mailAuthenticate, temporaryNumberCheck, updateUserByEmail } from "../../actions/mailAction";
-import { PASSWORD_REGEX, EMAIL_REGEX} from '../common/CommonConstants';
+import { PASSWORD_REGEX, EMAIL_REGEX} from '../../common/commonConstants';
 import { Alert } from '../common/modal/Modal';
 import {useNavigate } from "react-router-dom";
+import { UserType, TemporaryNumberCheckType } from "src/common/commonTypes";
 
 const theme = createTheme({
     palette: {
@@ -27,21 +28,21 @@ const theme = createTheme({
   });
 
 
-export const PasswordFinder = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [openAlert, setOpenAlert] = useState(false);
-    const [emailCheckMsg, setEmailCheckMsg] = useState("");
-    const [temporaryNumber, setTemporaryNumber] = useState("");
-    const [isEmailCheckOpen, setEmailCheckOpen] = useState(false);
-    const [msg, setMsg] = useState("");
-    const [isLoading, setLoading] = useState(false);
-    const [isTimeOver, setTimeOver] = useState(false);
-    const [emailCheckResult, setEmailCheckResult] = useState("");
-    const [isEmailCheck, setEmailCheck] = useState(false);
-    const [timerCount, setTimerCount] = useState(0);
-    const [time, setTime] = useState('');
-    let timer;
+export const PasswordFinder:React.FC = () => {
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [openAlert, setOpenAlert] = useState<boolean>(false);
+    const [emailCheckMsg, setEmailCheckMsg] = useState<string>("");
+    const [temporaryNumber, setTemporaryNumber] = useState<string>("");
+    const [isEmailCheckOpen, setEmailCheckOpen] = useState<boolean>(false);
+    const [msg, setMsg] = useState<string>("");
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [isTimeOver, setTimeOver] = useState<boolean>(false);
+    const [emailCheckResult, setEmailCheckResult] = useState<string>("");
+    const [isEmailCheck, setEmailCheck] = useState<boolean>(false);
+    const [timerCount, setTimerCount] = useState<number>(0);
+    const [time, setTime] = useState<string>('');
+    let timer:NodeJS.Timeout;
 
     useEffect(() => {
         timer = setInterval(() => {
@@ -60,41 +61,41 @@ export const PasswordFinder = () => {
 
     const navigate = useNavigate();
 
-    const onEmailHandler = (event) => {
+    const onEmailHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setEmail(event.currentTarget.value)
     }
 
-    const onPasswordHandler = (event) => {
+    const onPasswordHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setPassword(event.currentTarget.value)
     }
 
-    const onCloseAlertHandler = () => setOpenAlert(false);
+    const onCloseAlertHandler = ():void => setOpenAlert(false);
 
-    const onTemporaryNumberHandler = (event) => {
+    const onTemporaryNumberHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setTemporaryNumber(event.currentTarget.value);
     }
 
-    const hasEmailError = () => {
+    const hasEmailError = ():boolean => {
         return !!email && !EMAIL_REGEX.test(email)
     }
 
-    const hasPasswordError = () => {
+    const hasPasswordError = ():boolean => {
         return !!password && !PASSWORD_REGEX.test(password)
     }
 
-    const showErrorMsg = (err = '오류가 발생하였습니다.') => {
+    const showErrorMsg = (err:string = '오류가 발생하였습니다.'):void => {
         setOpenAlert(true);
         setMsg(err);
     }
 
-    const onEmailCheckReset = () => {
+    const onEmailCheckReset = ():void => {
         setEmailCheckOpen(false);
         setTemporaryNumber('');
         setEmailCheckResult('');
         setEmailCheckMsg('');
     }
 
-    const onEmailSendHandler = () => {
+    const onEmailSendHandler = ():void => {
         if(!email || hasEmailError()) {
             setEmailCheckMsg('이메일을 확인해주세요');
             return;
@@ -125,8 +126,8 @@ export const PasswordFinder = () => {
         });
     }
 
-    const onTemporaryNumberCheckHandler = () => {
-        const data = {
+    const onTemporaryNumberCheckHandler = ():void => {
+        const data:TemporaryNumberCheckType = {
             email: email,
             temporaryNumber: temporaryNumber
         };
@@ -147,8 +148,8 @@ export const PasswordFinder = () => {
         });
     }
 
-    const onPasswordChangeSendHandler = () => {
-        let errorMsg = '';
+    const onPasswordChangeSendHandler = ():void => {
+        let errorMsg:string = '';
         setMsg(errorMsg);
         if(!email || hasEmailError()) errorMsg += '이메일을 확인해주세요';
         if(!isEmailCheck) errorMsg += '이메일 인증을 완료해주세요';
@@ -160,7 +161,7 @@ export const PasswordFinder = () => {
             return;
         }
 
-        const data = {
+        const data:UserType = {
             email: email,
             password: password
         };
